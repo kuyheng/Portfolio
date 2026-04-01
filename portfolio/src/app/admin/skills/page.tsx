@@ -37,6 +37,7 @@ import { skillService } from "@/lib/services/skillService";
 const categories = ["Frontend", "Backend", "Tools"];
 
 type Skill = { id: number; name: string; icon_url: string; category: string };
+type SkillsByCategory = Record<string, Skill[]>;
 
 type SkillFormState = {
   name: string;
@@ -54,7 +55,7 @@ const isImage = (value: string) => value.startsWith("http") || value.startsWith(
 
 export default function AdminSkillsPage() {
   const queryClient = useQueryClient();
-  const { data: skills = {}, isLoading } = useQuery({
+  const { data: skills = {}, isLoading } = useQuery<SkillsByCategory>({
     queryKey: ["skills"],
     queryFn: skillService.getSkills,
   });
