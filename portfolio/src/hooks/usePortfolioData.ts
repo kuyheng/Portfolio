@@ -8,7 +8,21 @@ import { skillService } from "@/lib/services/skillService";
 import { profileService } from "@/lib/services/profileService";
 import { cvService } from "@/lib/services/cvService";
 
-const mapProject = (project) => ({
+type ProjectApi = {
+  id: number | string;
+  title?: string;
+  category?: string;
+  description?: string;
+  tech_stack?: string[];
+  github_url?: string;
+  live_url?: string;
+  thumbnail_url?: string;
+};
+
+type SkillApi = { name: string; icon_url?: string };
+type SkillGroups = Record<string, SkillApi[]>;
+
+const mapProject = (project: ProjectApi) => ({
   id: String(project.id),
   title: project.title,
   category: project.category || "Web",
@@ -19,11 +33,11 @@ const mapProject = (project) => ({
   image: project.thumbnail_url || "/projects/nebula.svg",
 });
 
-const mapSkills = (skills) =>
+const mapSkills = (skills?: SkillGroups) =>
   Object.fromEntries(
     Object.entries(skills || {}).map(([category, list]) => [
       category,
-      list.map((skill) => ({
+      list.map((skill: SkillApi) => ({
         name: skill.name,
         icon: skill.icon_url || "devicon-code-plain",
       })),
@@ -35,11 +49,11 @@ export function usePortfolioData() {
     queryKey: ["profile"],
     queryFn: profileService.getProfile,
   });
-  const projectsQuery = useQuery({
+  const projectsQuery = useQuery<ProjectApi[]>({
     queryKey: ["projects"],
     queryFn: projectService.getProjects,
   });
-  const skillsQuery = useQuery({
+  const skillsQuery = useQuery<SkillGroups>({
     queryKey: ["skills"],
     queryFn: skillService.getSkills,
   });
