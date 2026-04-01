@@ -24,7 +24,7 @@ type SkillGroups = Record<string, SkillApi[]>;
 
 const mapProject = (project: ProjectApi) => ({
   id: String(project.id),
-  title: project.title,
+  title: project.title ?? "Untitled Project",
   category: project.category || "Web",
   description: project.description || "",
   tech: project.tech_stack || [],
