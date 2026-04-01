@@ -9,13 +9,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { statsService } from "@/lib/services/statsService";
 import { contactService } from "@/lib/services/contactService";
 
+type ContactMessage = {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  is_read: boolean;
+  created_at: string;
+};
+
 export default function AdminDashboardPage() {
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["stats"],
     queryFn: statsService.getDashboardStats,
   });
 
-  const { data: messages, isLoading: messagesLoading } = useQuery({
+  const { data: messages, isLoading: messagesLoading } = useQuery<ContactMessage[]>({
     queryKey: ["contacts"],
     queryFn: contactService.getMessages,
   });
