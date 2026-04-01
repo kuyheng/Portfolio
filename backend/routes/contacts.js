@@ -1,6 +1,7 @@
 const express = require("express");
 const { body, param } = require("express-validator");
 const auth = require("../middleware/auth");
+const requireAdmin = require("../middleware/admin");
 const validate = require("../middleware/validate");
 const { create, getAll, markRead, remove } = require("../controllers/contactController");
 
@@ -17,11 +18,12 @@ router.post(
   create
 );
 
-router.get("/", auth, getAll);
+router.get("/", auth, requireAdmin, getAll);
 
 router.patch(
   "/:id/read",
   auth,
+  requireAdmin,
   [param("id").isInt().withMessage("Contact id must be an integer.")],
   validate,
   markRead
@@ -30,6 +32,7 @@ router.patch(
 router.delete(
   "/:id",
   auth,
+  requireAdmin,
   [param("id").isInt().withMessage("Contact id must be an integer.")],
   validate,
   remove

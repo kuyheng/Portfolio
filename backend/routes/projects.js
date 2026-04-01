@@ -1,6 +1,7 @@
 const express = require("express");
 const { body, param } = require("express-validator");
 const auth = require("../middleware/auth");
+const requireAdmin = require("../middleware/admin");
 const validate = require("../middleware/validate");
 const { uploadImage } = require("../middleware/upload");
 const {
@@ -20,6 +21,7 @@ router.get("/:id", [param("id").isInt().withMessage("Project id must be an integ
 router.post(
   "/",
   auth,
+  requireAdmin,
   uploadImage.single("thumbnail"),
   [
     body("title").notEmpty().withMessage("Title is required."),
@@ -34,6 +36,7 @@ router.post(
 router.put(
   "/:id",
   auth,
+  requireAdmin,
   uploadImage.single("thumbnail"),
   [
     param("id").isInt().withMessage("Project id must be an integer."),
@@ -47,6 +50,7 @@ router.put(
 router.delete(
   "/:id",
   auth,
+  requireAdmin,
   [param("id").isInt().withMessage("Project id must be an integer.")],
   validate,
   remove
@@ -55,6 +59,7 @@ router.delete(
 router.patch(
   "/reorder",
   auth,
+  requireAdmin,
   [
     body("order").optional().isArray(),
     body("ids").optional().isArray(),

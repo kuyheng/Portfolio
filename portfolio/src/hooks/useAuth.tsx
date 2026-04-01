@@ -8,6 +8,7 @@ type User = {
   name: string | null;
   email: string;
   job_title?: string | null;
+  role?: string | null;
 };
 
 type AuthContextValue = {

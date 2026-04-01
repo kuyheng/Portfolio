@@ -6,11 +6,23 @@ async function getProfile(req, res) {
       `SELECT id, name, email, job_title, bio, profile_photo_url,
               github_url, linkedin_url, twitter_url, created_at, updated_at
        FROM users
+       WHERE role = 'admin'
        ORDER BY id ASC
        LIMIT 1`
     );
+
     if (!result.rows.length) {
-      return res.status(404).json({ message: "Profile not found." });
+      const fallback = await pool.query(
+        `SELECT id, name, email, job_title, bio, profile_photo_url,
+                github_url, linkedin_url, twitter_url, created_at, updated_at
+         FROM users
+         ORDER BY id ASC
+         LIMIT 1`
+      );
+      if (!fallback.rows.length) {
+        return res.status(404).json({ message: "Profile not found." });
+      }
+      return res.status(200).json({ profile: fallback.rows[0] });
     }
     return res.status(200).json({ profile: result.rows[0] });
   } catch (error) {
@@ -39,7 +51,8 @@ async function updateProfile(req, res) {
            profile_photo_url = $5,
            github_url = $6,
            linkedin_url = $7,
-           twitter_url = $8
+           twitter_url = $8,
+           updated_at = NOW()
        WHERE id = $9
        RETURNING id, name, email, job_title, bio, profile_photo_url,
                  github_url, linkedin_url, twitter_url, created_at, updated_at`,

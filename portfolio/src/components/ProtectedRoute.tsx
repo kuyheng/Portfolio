@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isLoading && (!user || user.role !== "admin")) {
       router.replace(`/login?next=${encodeURIComponent(pathname || "/admin")}`);
     }
   }, [isLoading, pathname, router, user]);
@@ -23,7 +23,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     );
   }
 
-  if (!user) {
+  if (!user || user.role !== "admin") {
     return null;
   }
 

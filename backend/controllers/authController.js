@@ -12,6 +12,12 @@ async function register(req, res) {
   const { name, email, password, job_title } = req.body;
 
   try {
+    const allowRegistration =
+      String(process.env.ALLOW_REGISTRATION || "").toLowerCase() === "true";
+    if (!allowRegistration) {
+      return res.status(403).json({ message: "Registration is disabled." });
+    }
+
     const existing = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
     if (existing.rows.length) {
       return res.status(409).json({ message: "Email already registered." });
@@ -19,8 +25,8 @@ async function register(req, res) {
 
     const hash = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash, job_title)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO users (name, email, password_hash, job_title, role)
+       VALUES ($1, $2, $3, $4, 'user')
        RETURNING *`,
       [name, email, hash, job_title || null]
     );
@@ -48,9 +54,13 @@ async function login(req, res) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role || "user" },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     return res.status(200).json({ token, user: sanitizeUser(user) });
   } catch (error) {

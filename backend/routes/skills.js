@@ -1,6 +1,7 @@
 const express = require("express");
 const { body, param } = require("express-validator");
 const auth = require("../middleware/auth");
+const requireAdmin = require("../middleware/admin");
 const validate = require("../middleware/validate");
 const { getAll, create, update, remove } = require("../controllers/skillController");
 
@@ -11,6 +12,7 @@ router.get("/", getAll);
 router.post(
   "/",
   auth,
+  requireAdmin,
   [
     body("name").notEmpty().withMessage("Skill name is required."),
     body("category").optional().isLength({ max: 50 }),
@@ -23,6 +25,7 @@ router.post(
 router.put(
   "/:id",
   auth,
+  requireAdmin,
   [
     param("id").isInt().withMessage("Skill id must be an integer."),
     body("name").optional().isLength({ max: 100 }),
@@ -36,6 +39,7 @@ router.put(
 router.delete(
   "/:id",
   auth,
+  requireAdmin,
   [param("id").isInt().withMessage("Skill id must be an integer.")],
   validate,
   remove
