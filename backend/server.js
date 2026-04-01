@@ -11,12 +11,24 @@ const cvRoutes = require("./routes/cv");
 const contactRoutes = require("./routes/contacts");
 const profileRoutes = require("./routes/profile");
 const statsRoutes = require("./routes/stats");
+const analyticsRoutes = require("./routes/analytics");
 
 const app = express();
+app.set("trust proxy", 1);
+
+const allowedOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (!allowedOrigins.length) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
@@ -33,6 +45,7 @@ app.use("/api/cv", cvRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/stats", statsRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Portfolio API running." });

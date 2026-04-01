@@ -1,62 +1,32 @@
 import { NextResponse } from "next/server";
-import { readData, writeData } from "@/lib/server-data";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type Skill = { name: string; icon: string };
-type SkillsPayload = {
-  skills: Record<string, Skill[]>;
-  activityMessage?: string;
-};
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000").replace(/\/$/, "");
 
-export async function GET() {
-  const data = await readData();
-  return NextResponse.json(
-    { skills: data.skills },
-    { headers: { "Cache-Control": "no-store" } }
-  );
+export async function GET(request: Request) {
+  const res = await fetch(`${API_BASE}/api/skills`, {
+    headers: {
+      Authorization: request.headers.get("authorization") || "",
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  return NextResponse.json(data, { status: res.status });
 }
 
 export async function PUT(request: Request) {
-  const body = (await request.json()) as Partial<SkillsPayload>;
-
-  if (!body.skills || typeof body.skills !== "object") {
-    return NextResponse.json({ error: "Invalid skills payload." }, { status: 400 });
-  }
-
-  const data = await readData();
-  const now = new Date().toISOString();
-  const nextSkills = { ...data.skills } as Record<string, Skill[]>;
-  for (const [category, list] of Object.entries(body.skills)) {
-    if (Array.isArray(list)) {
-      nextSkills[category] = list;
-    }
-  }
-
-  const next = {
-    ...data,
-    skills: nextSkills as typeof data.skills,
-    metrics: {
-      ...data.metrics,
-      lastUpdated: now,
+  const res = await fetch(`${API_BASE}/api/skills`, {
+    method: "PUT",
+    headers: {
+      Authorization: request.headers.get("authorization") || "",
+      "Content-Type": "application/json",
     },
-  };
+    body: JSON.stringify(await request.json()),
+  });
 
-  if (body.activityMessage) {
-    next.activity = [
-      {
-        id: crypto.randomUUID(),
-        message: body.activityMessage,
-        timestamp: now,
-      },
-      ...data.activity,
-    ].slice(0, 20);
-  }
-
-  await writeData(next);
-  return NextResponse.json(
-    { skills: next.skills },
-    { headers: { "Cache-Control": "no-store" } }
-  );
+  const data = await res.json();
+  return NextResponse.json(data, { status: res.status });
 }
