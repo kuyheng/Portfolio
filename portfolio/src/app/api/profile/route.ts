@@ -87,7 +87,11 @@ export async function PUT(request: Request) {
   }
 
   if (body.stats) {
-    next.stats = body.stats;
+    next.stats = body.stats.map((stat) => ({
+      label: stat.label,
+      value: stat.value,
+      suffix: stat.suffix ?? "",
+    }));
   }
 
   if (typeof body.cvUrl === "string") {
