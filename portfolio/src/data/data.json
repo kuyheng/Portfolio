@@ -1,0 +1,178 @@
+{
+  "profile": {
+    "name": "Kuyheng Thoeng",
+    "role": "Junior Developer",
+    "location": "Phnom Penh, Cambodia",
+    "bio": "I build fast, accessible web apps with modern React and reliable APIs. I care about clean UX, performance, and maintainable code that scales with the team.",
+    "email": "hello@kuyheng.dev",
+    "photo": "/profile.svg",
+    "socials": {
+      "github": "https://github.com/",
+      "linkedin": "https://www.linkedin.com/",
+      "telegram": "https://t.me/",
+      "email": "mailto:hello@kuyheng.dev"
+    }
+  },
+  "hero": {
+    "roles": ["Junior Developer"],
+    "cta": {
+      "primary": "View My Work",
+      "secondary": "Download CV"
+    }
+  },
+  "about": {
+    "title": "Curious builder focused on outcomes",
+    "subtitle": "I care about clear UX, reliable APIs, and measurable impact for the teams I support.",
+    "availability": {
+      "label": "Open to freelance",
+      "detail": "Available in Q2 2026"
+    },
+    "highlights": [
+      "Built and shipped production web apps with Next.js and Node.js",
+      "Improved dashboard load time from 3.1s to 1.2s through UI and API tuning",
+      "Designed a reusable UI kit used across 12+ screens"
+    ],
+    "strengths": [
+      {
+        "title": "Frontend craft",
+        "description": "Polished UI, micro-interactions, and accessibility with modern React."
+      },
+      {
+        "title": "Backend reliability",
+        "description": "Clean APIs, solid data modeling, and thoughtful error handling."
+      },
+      {
+        "title": "Product sense",
+        "description": "I ask the right questions to ship what users actually need."
+      }
+    ],
+    "timeline": [
+      {
+        "label": "Now",
+        "title": "Building web apps and dashboards",
+        "detail": "Focused on speed, clarity, and maintainable systems."
+      },
+      {
+        "label": "Previously",
+        "title": "Freelance projects for local businesses",
+        "detail": "Delivered marketing sites, admin tools, and e-commerce flows."
+      },
+      {
+        "label": "Next",
+        "title": "Open to product-focused teams",
+        "detail": "Especially fintech, education, and SaaS."
+      }
+    ],
+    "toolbox": ["Next.js", "TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind", "Framer Motion", "Figma"]
+  },
+  "stats": [
+    { "label": "Years Experience", "value": 5, "suffix": "+" },
+    { "label": "Projects Delivered", "value": 38, "suffix": "+" },
+    { "label": "Happy Clients", "value": 12, "suffix": "+" }
+  ],
+  "projects": [
+    {
+      "id": "nebula",
+      "title": "Nebula Analytics",
+      "category": "Web",
+      "description": "Real-time product analytics dashboard with custom cohort tracking and AI insights.",
+      "tech": ["Next.js", "TypeScript", "PostgreSQL"],
+      "github": "https://github.com/",
+      "demo": "https://example.com/",
+      "image": "/projects/nebula.svg"
+    },
+    {
+      "id": "atlas",
+      "title": "Atlas Mobile Suite",
+      "category": "Mobile",
+      "description": "Cross-platform logistics app that keeps distributed teams in sync and on schedule.",
+      "tech": ["React Native", "Node.js", "Firebase"],
+      "github": "https://github.com/",
+      "demo": "https://example.com/",
+      "image": "/projects/atlas.svg"
+    },
+    {
+      "id": "aurora",
+      "title": "Aurora Commerce",
+      "category": "Web",
+      "description": "Headless commerce storefront with lightning-fast search, personalization, and checkout.",
+      "tech": ["Next.js", "GraphQL", "Stripe"],
+      "github": "https://github.com/",
+      "demo": "https://example.com/",
+      "image": "/projects/aurora.svg"
+    },
+    {
+      "id": "pulse",
+      "title": "Pulse UI Kit",
+      "category": "UI/UX",
+      "description": "Design system and UI kit that unifies product experiences across multiple teams.",
+      "tech": ["Figma", "Storybook", "Tailwind"],
+      "github": "https://github.com/",
+      "demo": "https://example.com/",
+      "image": "/projects/pulse.svg"
+    }
+  ],
+  "news": [
+    {
+      "id": "news-1",
+      "title": "Shipped a redesigned portfolio experience",
+      "category": "Product",
+      "date": "2026-03-28",
+      "excerpt": "Refined the layout, improved readability, and added a richer About section focused on outcomes.",
+      "link": ""
+    },
+    {
+      "id": "news-2",
+      "title": "Built a dashboard with faster load times",
+      "category": "Engineering",
+      "date": "2026-02-18",
+      "excerpt": "Optimized API responses and reduced bundle size to cut load time from 3.1s to 1.2s.",
+      "link": ""
+    },
+    {
+      "id": "news-3",
+      "title": "Published a UI kit for internal teams",
+      "category": "Design Systems",
+      "date": "2026-01-08",
+      "excerpt": "Created reusable components and guidelines used across 12+ product screens.",
+      "link": ""
+    }
+  ],
+  "skills": {
+    "Frontend": [
+      { "name": "React", "icon": "devicon-react-original" },
+      { "name": "Next.js", "icon": "devicon-nextjs-original" },
+      { "name": "TypeScript", "icon": "devicon-typescript-original" },
+      { "name": "Tailwind", "icon": "devicon-tailwindcss-original" },
+      { "name": "Framer Motion", "icon": "devicon-javascript-plain" }
+    ],
+    "Backend": [
+      { "name": "Node.js", "icon": "devicon-nodejs-original" },
+      { "name": "Express", "icon": "devicon-express-original" },
+      { "name": "PostgreSQL", "icon": "devicon-postgresql-original" },
+      { "name": "GraphQL", "icon": "devicon-graphql-plain" },
+      { "name": "Firebase", "icon": "devicon-firebase-plain" }
+    ],
+    "Tools": [
+      { "name": "Git", "icon": "devicon-git-original" },
+      { "name": "Docker", "icon": "devicon-docker-plain" },
+      { "name": "AWS", "icon": "devicon-amazonwebservices-original" },
+      { "name": "Vercel", "icon": "devicon-vercel-original" },
+      { "name": "Figma", "icon": "devicon-figma-plain" }
+    ]
+  },
+  "cvUrl": "/cv.pdf",
+  "cvUpdatedAt": "2026-03-31T00:00:00.000Z",
+  "activity": [
+    {
+      "id": "seed-1",
+      "message": "Initial portfolio data loaded",
+      "timestamp": "2026-03-31T00:00:00.000Z"
+    }
+  ],
+  "metrics": {
+    "cvDownloads": 0,
+    "profileViews": 0,
+    "lastUpdated": "2026-03-31T00:00:00.000Z"
+  }
+}

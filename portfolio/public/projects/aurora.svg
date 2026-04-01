@@ -1,0 +1,14 @@
+﻿<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" rx="32" fill="#0B0D1A"/>
+  <rect x="50" y="50" width="700" height="350" rx="28" fill="url(#grad3)"/>
+  <rect x="110" y="140" width="580" height="12" rx="6" fill="#3B82F6" opacity="0.5"/>
+  <rect x="110" y="180" width="420" height="12" rx="6" fill="#7C3AED" opacity="0.5"/>
+  <text x="100" y="120" fill="#E5E7EB" font-size="32" font-family="Space Grotesk, Arial">Aurora Commerce</text>
+  <text x="100" y="160" fill="#94A3B8" font-size="18" font-family="Inter, Arial">Headless storefront and checkout</text>
+  <defs>
+    <linearGradient id="grad3" x1="50" y1="50" x2="750" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+  </defs>
+</svg>

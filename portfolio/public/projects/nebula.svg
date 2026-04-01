@@ -1,0 +1,14 @@
+﻿<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" rx="32" fill="#0B0D1A"/>
+  <rect x="40" y="60" width="720" height="330" rx="28" fill="url(#grad1)" opacity="0.85"/>
+  <circle cx="620" cy="120" r="90" fill="#3B82F6" opacity="0.25"/>
+  <circle cx="210" cy="320" r="120" fill="#7C3AED" opacity="0.18"/>
+  <text x="80" y="120" fill="#E5E7EB" font-size="32" font-family="Space Grotesk, Arial">Nebula Analytics</text>
+  <text x="80" y="160" fill="#94A3B8" font-size="18" font-family="Inter, Arial">Realtime dashboards and AI insights</text>
+  <defs>
+    <linearGradient id="grad1" x1="40" y1="60" x2="760" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1E293B"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

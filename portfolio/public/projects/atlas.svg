@@ -1,0 +1,14 @@
+﻿<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" rx="32" fill="#0B0D1A"/>
+  <rect x="60" y="70" width="680" height="310" rx="28" fill="url(#grad2)" opacity="0.9"/>
+  <path d="M140 290 C220 220, 320 240, 420 180" stroke="#3B82F6" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <path d="M240 320 C320 260, 420 300, 540 210" stroke="#7C3AED" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <text x="100" y="140" fill="#E5E7EB" font-size="32" font-family="Space Grotesk, Arial">Atlas Mobile Suite</text>
+  <text x="100" y="180" fill="#94A3B8" font-size="18" font-family="Inter, Arial">Logistics, tracking, and team ops</text>
+  <defs>
+    <linearGradient id="grad2" x1="60" y1="70" x2="740" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

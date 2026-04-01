@@ -1,0 +1,14 @@
+﻿<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" rx="32" fill="#0B0D1A"/>
+  <rect x="70" y="80" width="660" height="290" rx="28" fill="url(#grad4)" opacity="0.9"/>
+  <circle cx="200" cy="220" r="60" fill="#3B82F6" opacity="0.2"/>
+  <circle cx="540" cy="220" r="90" fill="#7C3AED" opacity="0.2"/>
+  <text x="110" y="150" fill="#E5E7EB" font-size="32" font-family="Space Grotesk, Arial">Pulse UI Kit</text>
+  <text x="110" y="190" fill="#94A3B8" font-size="18" font-family="Inter, Arial">Design system and component library</text>
+  <defs>
+    <linearGradient id="grad4" x1="70" y1="80" x2="730" y2="370" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+</svg>

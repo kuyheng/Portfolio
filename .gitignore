@@ -1,0 +1,8 @@
+node_modules/
+**/node_modules/
+**/.npm-cache/
+**/.next/
+**/.vercel/
+**/.env
+**/.env.*
+**/uploads/
