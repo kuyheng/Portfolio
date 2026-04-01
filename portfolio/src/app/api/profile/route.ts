@@ -4,7 +4,8 @@ import { readData, writeData } from "@/lib/server-data";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type MetricsDelta = Partial<Record<"cvDownloads" | "profileViews", number>>;
+type MetricKey = "cvDownloads" | "profileViews";
+type MetricsDelta = Partial<Record<MetricKey, number>>;
 
 type ProfilePayload = {
   profile?: Partial<{
@@ -113,8 +114,8 @@ export async function PUT(request: Request) {
     next.metrics = { ...next.metrics };
     for (const [key, value] of Object.entries(body.metricsDelta)) {
       if (typeof value === "number") {
-        const typedKey = key as keyof typeof next.metrics;
-        const current = typeof next.metrics[typedKey] === "number" ? (next.metrics[typedKey] as number) : 0;
+        const typedKey = key as MetricKey;
+        const current = typeof next.metrics[typedKey] === "number" ? next.metrics[typedKey] : 0;
         next.metrics[typedKey] = current + value;
       }
     }
