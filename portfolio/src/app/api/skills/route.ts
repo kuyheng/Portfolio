@@ -4,8 +4,9 @@ import { readData, writeData } from "@/lib/server-data";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+type Skill = { name: string; icon: string };
 type SkillsPayload = {
-  skills: Record<string, Array<{ name: string; icon: string }>>;
+  skills: Record<string, Skill[]>;
   activityMessage?: string;
 };
 
@@ -26,9 +27,16 @@ export async function PUT(request: Request) {
 
   const data = await readData();
   const now = new Date().toISOString();
+  const nextSkills = { ...data.skills } as Record<string, Skill[]>;
+  for (const [category, list] of Object.entries(body.skills)) {
+    if (Array.isArray(list)) {
+      nextSkills[category] = list;
+    }
+  }
+
   const next = {
     ...data,
-    skills: body.skills,
+    skills: nextSkills as typeof data.skills,
     metrics: {
       ...data.metrics,
       lastUpdated: now,
