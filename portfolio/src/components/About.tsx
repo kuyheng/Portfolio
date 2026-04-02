@@ -2,17 +2,13 @@
 
 import type { AboutData } from "@/data/aboutData";
 import AboutHero from "@/components/about/AboutHero";
-import FeatureCards from "@/components/about/FeatureCards";
-import JourneySection from "@/components/about/JourneySection";
-import ToolboxSection from "@/components/about/ToolboxSection";
 
 type AboutProps = {
   data: AboutData;
 };
 
 export default function About({ data }: AboutProps) {
-  const { section, availability, hero, highlights, stats, features, journey, toolbox } =
-    data;
+  const { section, availability, hero, highlights, stats } = data;
 
   if (!section.enabled || !section.id) return null;
 
@@ -32,24 +28,6 @@ export default function About({ data }: AboutProps) {
           stats={stats}
         />
 
-        {features.enabled ? (
-          <FeatureCards title={features.title} items={features.items} />
-        ) : null}
-
-        {journey.enabled || toolbox.enabled ? (
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-            {journey.enabled ? (
-              <JourneySection title={journey.title} items={journey.items} />
-            ) : null}
-            {toolbox.enabled ? (
-              <ToolboxSection
-                title={toolbox.title}
-                description={toolbox.description}
-                items={toolbox.items}
-              />
-            ) : null}
-          </div>
-        ) : null}
       </div>
     </section>
   );

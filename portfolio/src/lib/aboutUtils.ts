@@ -27,21 +27,6 @@ export function mergeAboutData(
       ...override?.stats,
       items: override?.stats?.items ?? base.stats.items,
     },
-    features: {
-      ...base.features,
-      ...override?.features,
-      items: override?.features?.items ?? base.features.items,
-    },
-    journey: {
-      ...base.journey,
-      ...override?.journey,
-      items: override?.journey?.items ?? base.journey.items,
-    },
-    toolbox: {
-      ...base.toolbox,
-      ...override?.toolbox,
-      items: override?.toolbox?.items ?? base.toolbox.items,
-    },
   };
 
   const avatarSrc =

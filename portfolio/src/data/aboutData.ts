@@ -19,25 +19,6 @@ export type AboutStat = {
   suffix?: string;
 };
 
-export type AboutFeature = {
-  id: string;
-  title: string;
-  description: string;
-  icon?: string;
-};
-
-export type AboutJourneyItem = {
-  id: string;
-  label: string;
-  title: string;
-  detail: string;
-};
-
-export type AboutTool = {
-  id: string;
-  label: string;
-};
-
 export type AboutData = {
   section: {
     id: string;
@@ -66,22 +47,6 @@ export type AboutData = {
   stats: {
     enabled: boolean;
     items: AboutStat[];
-  };
-  features: {
-    enabled: boolean;
-    title: string;
-    items: AboutFeature[];
-  };
-  journey: {
-    enabled: boolean;
-    title: string;
-    items: AboutJourneyItem[];
-  };
-  toolbox: {
-    enabled: boolean;
-    title: string;
-    description?: string;
-    items: AboutTool[];
   };
 };
 
@@ -137,69 +102,6 @@ export const aboutData: AboutData = {
       { id: "stat-1", label: "Years Experience", value: 5, suffix: "+" },
       { id: "stat-2", label: "Projects Delivered", value: 38, suffix: "+" },
       { id: "stat-3", label: "Happy Clients", value: 12, suffix: "+" },
-    ],
-  },
-  features: {
-    enabled: true,
-    title: "What I bring",
-    items: [
-      {
-        id: "feature-1",
-        title: "Frontend craft",
-        description: "Polished UI, micro-interactions, and accessibility with modern React.",
-        icon: "sparkles",
-      },
-      {
-        id: "feature-2",
-        title: "Backend reliability",
-        description: "Clean APIs, solid data modeling, and thoughtful error handling.",
-        icon: "layers",
-      },
-      {
-        id: "feature-3",
-        title: "Product sense",
-        description: "I ask the right questions to ship what users actually need.",
-        icon: "compass",
-      },
-    ],
-  },
-  journey: {
-    enabled: true,
-    title: "Path",
-    items: [
-      {
-        id: "journey-1",
-        label: "Now",
-        title: "Building web apps and dashboards",
-        detail: "Focused on speed, clarity, and maintainable systems.",
-      },
-      {
-        id: "journey-2",
-        label: "Previously",
-        title: "Freelance projects for local businesses",
-        detail: "Delivered marketing sites, admin tools, and e-commerce flows.",
-      },
-      {
-        id: "journey-3",
-        label: "Next",
-        title: "Open to product-focused teams",
-        detail: "Especially fintech, education, and SaaS.",
-      },
-    ],
-  },
-  toolbox: {
-    enabled: true,
-    title: "Toolbox",
-    description: "The tools I use to move fast without breaking things.",
-    items: [
-      { id: "tool-1", label: "Next.js" },
-      { id: "tool-2", label: "TypeScript" },
-      { id: "tool-3", label: "React" },
-      { id: "tool-4", label: "Node.js" },
-      { id: "tool-5", label: "PostgreSQL" },
-      { id: "tool-6", label: "Tailwind" },
-      { id: "tool-7", label: "Framer Motion" },
-      { id: "tool-8", label: "Figma" },
     ],
   },
 };
