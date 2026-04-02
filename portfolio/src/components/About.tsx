@@ -1,14 +1,18 @@
 "use client";
 
-import { aboutData } from "@/data/aboutData";
+import type { AboutData } from "@/data/aboutData";
 import AboutHero from "@/components/about/AboutHero";
 import FeatureCards from "@/components/about/FeatureCards";
 import JourneySection from "@/components/about/JourneySection";
 import ToolboxSection from "@/components/about/ToolboxSection";
 
-export default function About() {
+type AboutProps = {
+  data: AboutData;
+};
+
+export default function About({ data }: AboutProps) {
   const { section, availability, hero, highlights, stats, features, journey, toolbox } =
-    aboutData;
+    data;
 
   if (!section.enabled || !section.id) return null;
 

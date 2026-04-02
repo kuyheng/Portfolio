@@ -3,10 +3,13 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import baseData from "@/data/data.json";
+import { aboutData } from "@/data/aboutData";
+import { mergeAboutData } from "@/lib/aboutUtils";
 import { projectService } from "@/lib/services/projectService";
 import { skillService } from "@/lib/services/skillService";
 import { profileService } from "@/lib/services/profileService";
 import { cvService } from "@/lib/services/cvService";
+import { aboutService } from "@/lib/services/aboutService";
 
 type ProjectApi = {
   id: number | string;
@@ -61,6 +64,10 @@ export function usePortfolioData() {
     queryKey: ["cv"],
     queryFn: cvService.getCVInfo,
   });
+  const aboutQuery = useQuery({
+    queryKey: ["about"],
+    queryFn: aboutService.getAbout,
+  });
 
   const data = useMemo(() => {
     const profile = profileQuery.data;
@@ -84,10 +91,17 @@ export function usePortfolioData() {
     const cvFileUrl = cvQuery.data?.file_url || baseData.cvUrl;
     const cvUrl = cvQuery.data?.file_url ? cvService.downloadCVUrl() : cvFileUrl;
 
+    const about = mergeAboutData(
+      aboutData,
+      aboutQuery.data || undefined,
+      mappedProfile.photo,
+      mappedProfile.name
+    );
+
     return {
       profile: mappedProfile,
       hero: baseData.hero,
-      about: baseData.about,
+      about,
       stats: baseData.stats,
       projects,
       news: baseData.news,
@@ -95,13 +109,20 @@ export function usePortfolioData() {
       cvUrl,
       cvFileUrl,
     };
-  }, [profileQuery.data, projectsQuery.data, skillsQuery.data, cvQuery.data]);
+  }, [
+    profileQuery.data,
+    projectsQuery.data,
+    skillsQuery.data,
+    cvQuery.data,
+    aboutQuery.data,
+  ]);
 
   const isLoading =
     profileQuery.isLoading ||
     projectsQuery.isLoading ||
     skillsQuery.isLoading ||
-    cvQuery.isLoading;
+    cvQuery.isLoading ||
+    aboutQuery.isLoading;
 
   return { data, isLoading };
 }

@@ -68,7 +68,7 @@ export default function AppShell() {
       />
       <main className="flex-1">
         <Hero profile={data.profile} hero={data.hero} cvUrl={data.cvUrl} />
-        <About />
+        <About data={data.about} />
         <Projects projects={data.projects} />
         <News news={data.news} />
         <Skills skills={data.skills} />

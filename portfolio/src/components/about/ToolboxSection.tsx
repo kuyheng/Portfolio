@@ -3,7 +3,7 @@
 type ToolboxSectionProps = {
   title: string;
   description?: string;
-  items: ReadonlyArray<string>;
+  items: ReadonlyArray<{ id: string; label: string }>;
 };
 
 export default function ToolboxSection({ title, description, items }: ToolboxSectionProps) {
@@ -16,14 +16,14 @@ export default function ToolboxSection({ title, description, items }: ToolboxSec
         <p className="mt-2 text-sm text-slate-400">{description}</p>
       ) : null}
       <div className="mt-4 flex flex-wrap gap-2">
-        {items.map((tool) => (
-          <span
-            key={tool}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300"
-          >
-            {tool}
-          </span>
-        ))}
+      {items.map((tool) => (
+        <span
+          key={tool.id}
+          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300"
+        >
+          {tool.label}
+        </span>
+      ))}
       </div>
     </div>
   );

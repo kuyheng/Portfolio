@@ -15,6 +15,7 @@ import {
   FolderKanban,
   ChevronLeft,
   ChevronRight,
+  User,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderKanban },
   { label: "Skills", href: "/admin/skills", icon: Sparkles },
+  { label: "About", href: "/admin/about", icon: User },
   { label: "Messages", href: "/admin/messages", icon: Mail },
   { label: "Analytics", href: "/admin/analytics", icon: Monitor },
   { label: "CV", href: "/admin/cv", icon: FileText },

@@ -76,8 +76,8 @@ export default function AboutHero({
           {stats.enabled ? <StatsGrid items={stats.items} /> : null}
           {hero.ctas?.length ? (
             <div className="flex flex-wrap gap-3">
-              {hero.ctas.map((cta) => (
-                <Button key={cta.label} variant={cta.variant} asChild>
+              {hero.ctas.filter((cta) => cta.enabled !== false).map((cta) => (
+                <Button key={cta.id} variant={cta.variant} asChild>
                   <a href={cta.href}>{cta.label}</a>
                 </Button>
               ))}
