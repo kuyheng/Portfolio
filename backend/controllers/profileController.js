@@ -7,7 +7,7 @@ async function getProfile(req, res) {
               github_url, linkedin_url, twitter_url, created_at, updated_at
        FROM users
        WHERE role = 'admin'
-       ORDER BY id ASC
+       ORDER BY updated_at DESC, id DESC
        LIMIT 1`
     );
 
@@ -16,7 +16,7 @@ async function getProfile(req, res) {
         `SELECT id, name, email, job_title, bio, profile_photo_url,
                 github_url, linkedin_url, twitter_url, created_at, updated_at
          FROM users
-         ORDER BY id ASC
+         ORDER BY updated_at DESC, id DESC
          LIMIT 1`
       );
       if (!fallback.rows.length) {
