@@ -62,7 +62,7 @@ export default function AdminTopbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-3 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm text-slate-200">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-xs font-semibold text-white">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-500 text-xs font-semibold text-white">
                 {(user?.name || "AD")
                   .split(" ")
                   .map((part) => part[0])

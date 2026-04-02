@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -11,33 +11,34 @@ import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { analyticsService } from "@/lib/services/analyticsService";
 
 export default function AppShell() {
   const { data, isLoading } = usePortfolioData();
-  const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [hasVisited, setHasVisited] = useLocalStorageState("portfolio-visited", false, {
+    serialize: (value) => String(value),
+    deserialize: (value) => value === "true",
+  });
+  const [theme, setTheme] = useLocalStorageState<"dark" | "light">(
+    "portfolio-theme",
+    "dark",
+    {
+      serialize: (value) => value,
+      deserialize: (value) => (value === "light" || value === "dark" ? value : "dark"),
+    }
+  );
+  const loading = isLoading || !hasVisited;
 
   useEffect(() => {
-    if (!isLoading) {
-      setLoading(false);
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    const visited = window.localStorage.getItem("portfolio-visited");
-    if (visited) {
-      setLoading(false);
-      return;
-    }
+    if (hasVisited) return;
 
     const timer = window.setTimeout(() => {
-      window.localStorage.setItem("portfolio-visited", "true");
-      setLoading(false);
+      setHasVisited(true);
     }, 1200);
 
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [hasVisited, setHasVisited]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -50,19 +51,6 @@ export default function AppShell() {
       })
       .catch(() => null);
   }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem("portfolio-theme");
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem("portfolio-theme", theme);
-  }, [theme]);
 
   return (
     <div
@@ -80,7 +68,7 @@ export default function AppShell() {
       />
       <main className="flex-1">
         <Hero profile={data.profile} hero={data.hero} cvUrl={data.cvUrl} />
-        <About profile={data.profile} about={data.about} stats={data.stats} />
+        <About />
         <Projects projects={data.projects} />
         <News news={data.news} />
         <Skills skills={data.skills} />

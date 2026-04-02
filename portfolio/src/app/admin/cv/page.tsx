@@ -37,7 +37,7 @@ export default function AdminCvPage() {
     setUploading(true);
     try {
       await uploadMutation.mutateAsync(file);
-    } catch (_error) {
+    } catch {
       // handled by mutation onError
     }
     setUploading(false);

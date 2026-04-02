@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -22,40 +23,27 @@ type ProfileForm = {
   photoFile: File | null;
 };
 
-const emptyProfile: ProfileForm = {
-  name: "",
-  job_title: "",
-  bio: "",
-  email: "",
-  github_url: "",
-  linkedin_url: "",
-  twitter_url: "",
-  profile_photo_url: "",
-  photoFile: null,
-};
+type ProfileResponse = Partial<Omit<ProfileForm, "photoFile">>;
 
 export default function AdminSettingsPage() {
   const queryClient = useQueryClient();
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile, isLoading } = useQuery<ProfileResponse>({
     queryKey: ["profile"],
     queryFn: profileService.getProfile,
   });
-  const [form, setForm] = useState<ProfileForm>(emptyProfile);
+  const [draft, setDraft] = useState<Partial<ProfileForm>>({});
 
-  useEffect(() => {
-    if (!profile) return;
-    setForm({
-      name: profile.name ?? "",
-      job_title: profile.job_title ?? "",
-      bio: profile.bio ?? "",
-      email: profile.email ?? "",
-      github_url: profile.github_url ?? "",
-      linkedin_url: profile.linkedin_url ?? "",
-      twitter_url: profile.twitter_url ?? "",
-      profile_photo_url: profile.profile_photo_url ?? "",
-      photoFile: null,
-    });
-  }, [profile]);
+  const form: ProfileForm = {
+    name: draft.name ?? profile?.name ?? "",
+    job_title: draft.job_title ?? profile?.job_title ?? "",
+    bio: draft.bio ?? profile?.bio ?? "",
+    email: draft.email ?? profile?.email ?? "",
+    github_url: draft.github_url ?? profile?.github_url ?? "",
+    linkedin_url: draft.linkedin_url ?? profile?.linkedin_url ?? "",
+    twitter_url: draft.twitter_url ?? profile?.twitter_url ?? "",
+    profile_photo_url: draft.profile_photo_url ?? profile?.profile_photo_url ?? "",
+    photoFile: draft.photoFile ?? null,
+  };
 
   const updateMutation = useMutation({
     mutationFn: profileService.updateProfile,
@@ -69,7 +57,7 @@ export default function AdminSettingsPage() {
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    setForm((prev) => ({
+    setDraft((prev) => ({
       ...prev,
       photoFile: file,
       profile_photo_url: URL.createObjectURL(file),
@@ -89,7 +77,8 @@ export default function AdminSettingsPage() {
         profile_photo_url: form.profile_photo_url,
         photo: form.photoFile || undefined,
       });
-    } catch (_error) {
+      setDraft({});
+    } catch {
       // handled by mutation onError
     }
   };
@@ -107,12 +96,15 @@ export default function AdminSettingsPage() {
         ) : (
           <div className="mt-4 grid gap-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="h-24 w-24 overflow-hidden rounded-full border border-slate-800 bg-slate-900/60">
+              <div className="relative h-24 w-24 overflow-hidden rounded-full border border-slate-800 bg-slate-900/60">
                 {form.profile_photo_url ? (
-                  <img
+                  <Image
                     src={form.profile_photo_url}
                     alt="Profile preview"
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                    unoptimized
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center text-xs text-slate-500">
@@ -129,41 +121,55 @@ export default function AdminSettingsPage() {
               <Input
                 placeholder="Name"
                 value={form.name}
-                onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, name: event.target.value }))
+                }
               />
               <Input
                 placeholder="Job Title"
                 value={form.job_title}
-                onChange={(event) => setForm((prev) => ({ ...prev, job_title: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, job_title: event.target.value }))
+                }
               />
             </div>
             <Textarea
               placeholder="About text"
               value={form.bio}
-              onChange={(event) => setForm((prev) => ({ ...prev, bio: event.target.value }))}
+              onChange={(event) =>
+                setDraft((prev) => ({ ...prev, bio: event.target.value }))
+              }
             />
             <div className="grid gap-4 md:grid-cols-2">
               <Input
                 placeholder="Email"
                 value={form.email}
-                onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, email: event.target.value }))
+                }
               />
               <Input
                 placeholder="GitHub URL"
                 value={form.github_url}
-                onChange={(event) => setForm((prev) => ({ ...prev, github_url: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, github_url: event.target.value }))
+                }
               />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <Input
                 placeholder="LinkedIn URL"
                 value={form.linkedin_url}
-                onChange={(event) => setForm((prev) => ({ ...prev, linkedin_url: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, linkedin_url: event.target.value }))
+                }
               />
               <Input
                 placeholder="Telegram URL"
                 value={form.twitter_url}
-                onChange={(event) => setForm((prev) => ({ ...prev, twitter_url: event.target.value }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, twitter_url: event.target.value }))
+                }
               />
             </div>
             <div className="grid gap-3">
@@ -171,7 +177,10 @@ export default function AdminSettingsPage() {
                 placeholder="Profile photo URL"
                 value={form.profile_photo_url}
                 onChange={(event) =>
-                  setForm((prev) => ({ ...prev, profile_photo_url: event.target.value }))
+                  setDraft((prev) => ({
+                    ...prev,
+                    profile_photo_url: event.target.value,
+                  }))
                 }
               />
             </div>

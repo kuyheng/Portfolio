@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Plus, Trash2 } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -97,7 +98,7 @@ export default function AdminSkillsPage() {
       });
       setForm(emptyForm);
       setDialogOpen(false);
-    } catch (_error) {
+    } catch {
       // handled by mutation onError
     }
   };
@@ -107,7 +108,7 @@ export default function AdminSkillsPage() {
     try {
       await deleteMutation.mutateAsync(deleteTarget.id);
       setDeleteTarget(null);
-    } catch (_error) {
+    } catch {
       // handled by mutation onError
     }
   };
@@ -194,9 +195,16 @@ export default function AdminSkillsPage() {
                   >
                     <div className="flex items-center gap-3">
                       {isImage(skill.icon_url || "") ? (
-                        <img src={skill.icon_url} alt={skill.name} className="h-6 w-6" />
+                        <Image
+                          src={skill.icon_url}
+                          alt={skill.name}
+                          width={24}
+                          height={24}
+                          className="h-6 w-6"
+                          unoptimized
+                        />
                       ) : (
-                        <i className={`${skill.icon_url || "devicon-code-plain"} text-xl text-blue-200`} />
+                        <i className={`${skill.icon_url || "devicon-code-plain"} text-xl text-cyan-200`} />
                       )}
                       <span className="text-sm text-slate-200">{skill.name}</span>
                     </div>

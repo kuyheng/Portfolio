@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type Project = {
   id: string;
@@ -25,10 +26,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       className="glass-card group relative flex h-full flex-col overflow-hidden rounded-2xl"
     >
       <div className="relative h-44 overflow-hidden">
-        <img
+        <Image
           src={project.image}
           alt={project.title}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover transition duration-500 group-hover:scale-110"
+          unoptimized
         />
         <div className="absolute inset-0 project-overlay" />
         <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/50 opacity-0 transition duration-300 group-hover:opacity-100">
@@ -75,7 +79,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-        <div className="absolute inset-0 rounded-2xl border border-blue-500/40 shadow-[0_0_30px_rgba(59,130,246,0.35)]" />
+        <div className="absolute inset-0 rounded-2xl border border-cyan-400/40 shadow-[0_0_30px_rgba(34,211,238,0.35)]" />
       </div>
     </motion.div>
   );

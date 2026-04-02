@@ -20,7 +20,7 @@ export default function StatCard({ title, value, icon, trend }: StatCardProps) {
           {trend}
         </Badge>
       </div>
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20 text-blue-200">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-200">
         {icon}
       </div>
     </Card>

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TypingTitleProps = {
   roles: string[];
@@ -8,7 +8,7 @@ type TypingTitleProps = {
 };
 
 export default function TypingTitle({ roles, loop = false }: TypingTitleProps) {
-  const safeRoles = roles.length ? roles : ["Developer"];
+  const safeRoles = useMemo(() => (roles.length ? roles : ["Developer"]), [roles]);
   const [roleIndex, setRoleIndex] = useState(0);
   const [display, setDisplay] = useState("");
   const [deleting, setDeleting] = useState(false);

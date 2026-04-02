@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Reorder } from "framer-motion";
 import {
@@ -75,6 +76,17 @@ type ProjectFormState = {
   demo: string;
 };
 
+type ProjectPayload = {
+  title: string;
+  description: string;
+  category: string;
+  tech_stack: string[];
+  github_url: string;
+  live_url: string;
+  thumbnail_url: string;
+  thumbnail?: File;
+};
+
 const emptyForm: ProjectFormState = {
   title: "",
   description: "",
@@ -88,25 +100,30 @@ const emptyForm: ProjectFormState = {
 
 export default function AdminProjectsPage() {
   const queryClient = useQueryClient();
-  const { data: projectsData, isLoading } = useQuery({
+  const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: ["projects"],
     queryFn: projectService.getProjects,
   });
 
-  const [displayProjects, setDisplayProjects] = useState<Project[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [reorderMode, setReorderMode] = useState(false);
+  const [reorderIds, setReorderIds] = useState<number[] | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [form, setForm] = useState<ProjectFormState>(emptyForm);
   const [editing, setEditing] = useState<Project | null>(null);
   const [techInput, setTechInput] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<Project | null>(null);
 
-  useEffect(() => {
-    if (!projectsData) return;
-    setDisplayProjects(projectsData as Project[]);
-  }, [projectsData]);
+  const displayProjects = useMemo(() => {
+    if (!reorderIds) return projects;
+    const projectMap = new Map(projects.map((project) => [project.id, project]));
+    const ordered = reorderIds
+      .map((id) => projectMap.get(id))
+      .filter((project): project is Project => !!project);
+    const remaining = projects.filter((project) => !reorderIds.includes(project.id));
+    return [...ordered, ...remaining];
+  }, [projects, reorderIds]);
 
   const filteredProjects = useMemo(() => {
     if (reorderMode) return displayProjects;
@@ -131,7 +148,7 @@ export default function AdminProjectsPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, payload }: { id: number; payload: any }) =>
+    mutationFn: ({ id, payload }: { id: number; payload: ProjectPayload }) =>
       projectService.updateProject(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -183,7 +200,7 @@ export default function AdminProjectsPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const payload = {
+    const payload: ProjectPayload = {
       title: form.title,
       description: form.description,
       category: form.category,
@@ -201,7 +218,7 @@ export default function AdminProjectsPage() {
         await createMutation.mutateAsync(payload);
       }
       setDialogOpen(false);
-    } catch (_error) {
+    } catch {
       // handled by mutation onError
     }
   };
@@ -211,7 +228,7 @@ export default function AdminProjectsPage() {
     try {
       await deleteMutation.mutateAsync(deleteTarget.id);
       setDeleteTarget(null);
-    } catch (_error) {
+    } catch {
       // handled by mutation onError
     }
   };
@@ -242,12 +259,24 @@ export default function AdminProjectsPage() {
   };
 
   const handleReorder = (next: Project[]) => {
-    setDisplayProjects(next);
+    setReorderIds(next.map((project) => project.id));
   };
 
   const saveOrder = () => {
     const ids = displayProjects.map((project) => project.id);
     reorderMutation.mutate(ids);
+  };
+
+  const handleToggleReorder = () => {
+    setReorderMode((prev) => {
+      const next = !prev;
+      if (next) {
+        setReorderIds(displayProjects.map((project) => project.id));
+      } else {
+        setReorderIds(null);
+      }
+      return next;
+    });
   };
 
   return (
@@ -277,7 +306,7 @@ export default function AdminProjectsPage() {
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant={reorderMode ? "secondary" : "outline"}
-            onClick={() => setReorderMode((prev) => !prev)}
+            onClick={handleToggleReorder}
           >
             {reorderMode ? "Exit Reorder" : "Reorder"}
           </Button>
@@ -354,7 +383,16 @@ export default function AdminProjectsPage() {
                 />
                 <Input type="file" accept="image/*" onChange={handleFile} />
                 {form.image ? (
-                  <img src={form.image} alt="Preview" className="h-32 w-full rounded-lg object-cover" />
+                  <div className="relative h-32 w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={form.image}
+                      alt="Preview"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
                 ) : null}
                 <Input
                   placeholder="GitHub URL"
@@ -403,10 +441,13 @@ export default function AdminProjectsPage() {
               >
                 <div className="flex items-center gap-3">
                   <GripVertical className="h-4 w-4 text-slate-500" />
-                  <img
+                  <Image
                     src={project.thumbnail_url || "/projects/nebula.svg"}
                     alt={project.title}
+                    width={64}
+                    height={48}
                     className="h-12 w-16 rounded-lg object-cover"
+                    unoptimized
                   />
                   <div>
                     <p className="text-sm font-semibold text-white">{project.title}</p>
@@ -435,10 +476,13 @@ export default function AdminProjectsPage() {
               {filteredProjects.map((project) => (
                 <TableRow key={project.id}>
                   <TableCell>
-                    <img
+                    <Image
                       src={project.thumbnail_url || "/projects/nebula.svg"}
                       alt={project.title}
+                      width={64}
+                      height={48}
                       className="h-12 w-16 rounded-lg object-cover"
+                      unoptimized
                     />
                   </TableCell>
                   <TableCell>

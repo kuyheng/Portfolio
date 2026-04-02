@@ -35,7 +35,7 @@ export default function News({ news }: NewsProps) {
         <SectionHeading
           eyebrow="News"
           title="Latest updates and milestones"
-          subtitle="Short notes about what I’m building, learning, and shipping."
+          subtitle="Short notes about what I'm building, learning, and shipping."
         />
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -56,13 +56,13 @@ export default function News({ news }: NewsProps) {
               <p className="text-sm text-slate-300">{item.excerpt}</p>
               {item.link ? (
                 <a
-                  className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-blue-200"
+                  className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200"
                   href={item.link}
                   target="_blank"
                   rel="noreferrer"
                 >
                   Read more
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true">{"->"}</span>
                 </a>
               ) : (
                 <span className="mt-auto text-xs uppercase tracking-[0.3em] text-slate-500">

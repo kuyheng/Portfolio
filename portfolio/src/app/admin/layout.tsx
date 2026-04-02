@@ -1,6 +1,5 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -8,28 +7,20 @@ import Sidebar from "@/components/admin/Sidebar";
 import AdminTopbar from "@/components/admin/Topbar";
 import { cn } from "@/lib/utils";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 
 const COLLAPSE_KEY = "admin-sidebar-collapsed";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useLocalStorageState(COLLAPSE_KEY, false, {
+    serialize: (value) => String(value),
+    deserialize: (value) => value === "true",
+  });
   const isLogin = pathname === "/admin/login";
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem(COLLAPSE_KEY);
-    setCollapsed(stored === "true");
-  }, []);
-
   const handleToggle = () => {
-    setCollapsed((prev) => {
-      const next = !prev;
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(COLLAPSE_KEY, String(next));
-      }
-      return next;
-    });
+    setCollapsed((prev) => !prev);
   };
 
   if (isLogin) {

@@ -26,7 +26,7 @@ export default function Hero({ profile, hero, cvUrl }: HeroProps) {
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden pb-24 pt-32">
       <div className="absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-16 h-[420px] w-[420px] -translate-x-1/2 rounded-full blur-3xl opacity-70 accent-gradient animate-[glowPulse_10s_ease-in-out_infinite]" />
-        <div className="absolute bottom-20 right-10 h-[260px] w-[260px] rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="absolute bottom-20 right-10 h-[260px] w-[260px] rounded-full bg-cyan-500/20 blur-3xl" />
       </div>
 
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-6 text-center">
@@ -40,7 +40,7 @@ export default function Hero({ profile, hero, cvUrl }: HeroProps) {
             {profile.location}
           </span>
           <h1 className="text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
-            Hi, I'm <span className="text-gradient">{profile.name}</span>
+            Hi, I&apos;m <span className="text-gradient">{profile.name}</span>
           </h1>
           <TypingTitle roles={hero.roles} />
           <p className="max-w-2xl text-base text-slate-300 sm:text-lg">{profile.bio}</p>
@@ -48,7 +48,7 @@ export default function Hero({ profile, hero, cvUrl }: HeroProps) {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
               href="#projects"
-              className="accent-gradient rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30"
+              className="accent-gradient rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/30"
             >
               {hero.cta.primary}
             </a>

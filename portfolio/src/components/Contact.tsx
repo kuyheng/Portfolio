@@ -64,7 +64,7 @@ export default function Contact({ profile }: ContactProps) {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-blue-500/60"
+                    className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-cyan-400/70"
                     placeholder="Your name"
                   />
                 </label>
@@ -76,7 +76,7 @@ export default function Contact({ profile }: ContactProps) {
                     value={form.email}
                     onChange={handleChange}
                     required
-                    className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-blue-500/60"
+                    className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-cyan-400/70"
                     placeholder="you@email.com"
                   />
                 </label>
@@ -89,14 +89,14 @@ export default function Contact({ profile }: ContactProps) {
                   value={form.message}
                   onChange={handleChange}
                   required
-                  className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-blue-500/60"
+                  className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-cyan-400/70"
                   placeholder="Tell me about your project..."
                 />
               </label>
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <button
                   type="submit"
-                  className="accent-gradient rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:shadow-blue-500/40"
+                  className="accent-gradient rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/40"
                   disabled={sendMutation.isPending}
                 >
                   {sendMutation.isPending ? "Sending..." : "Send Message"}

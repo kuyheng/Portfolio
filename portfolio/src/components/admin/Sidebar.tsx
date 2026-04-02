@@ -50,7 +50,7 @@ export function SidebarContent({ collapsed, onNavigate }: SidebarContentProps) {
   return (
     <div className="flex h-full flex-col">
       <div className={cn("flex items-center gap-3 px-4 py-6", collapsed && "justify-center")}>
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500 text-white">K</div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500 text-white">K</div>
         {!collapsed && (
           <div>
             <p className="text-sm font-semibold text-white">Portfolio Admin</p>
@@ -69,7 +69,7 @@ export function SidebarContent({ collapsed, onNavigate }: SidebarContentProps) {
             <div
               className={cn(
                 "flex items-center gap-3 rounded-full px-4 py-2 text-sm text-slate-200 transition",
-                isActive ? "bg-blue-500/20 text-blue-200" : "hover:bg-slate-800",
+                isActive ? "bg-cyan-500/20 text-cyan-200" : "hover:bg-slate-800",
                 collapsed && "justify-center px-3"
               )}
             >

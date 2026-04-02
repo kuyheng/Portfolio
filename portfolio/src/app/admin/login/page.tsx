@@ -22,7 +22,7 @@ function AdminLoginContent() {
       toast.success("Welcome back!");
       const next = searchParams.get("next") || "/dashboard";
       router.push(next);
-    } catch (error) {
+    } catch {
       toast.error("Invalid credentials. Please try again.");
     }
   };

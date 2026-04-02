@@ -20,7 +20,7 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   const contentType = request.headers.get("content-type") || "";
   let body: BodyInit;
-  let headers: Record<string, string> = {
+  const headers: Record<string, string> = {
     Authorization: request.headers.get("authorization") || "",
   };
 

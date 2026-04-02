@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 
 type Skill = { name: string; icon: string };
@@ -47,10 +48,17 @@ export default function Skills({ skills }: SkillsProps) {
                   <motion.div
                     key={skill.name}
                     variants={item}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-300 transition hover:border-blue-500/40 hover:text-white"
+                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-300 transition hover:border-cyan-400/50 hover:text-white"
                   >
                     {skill.icon.startsWith("http") || skill.icon.startsWith("data:") ? (
-                      <img src={skill.icon} alt={skill.name} className="h-5 w-5" />
+                      <Image
+                        src={skill.icon}
+                        alt={skill.name}
+                        width={20}
+                        height={20}
+                        className="h-5 w-5"
+                        unoptimized
+                      />
                     ) : (
                       <i className={`${skill.icon} text-xl`} />
                     )}

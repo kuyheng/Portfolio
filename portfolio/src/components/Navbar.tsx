@@ -92,7 +92,7 @@ export default function Navbar({ siteName, cvUrl, theme, onToggleTheme }: Navbar
       <a
         href={cvUrl}
         download
-        className="accent-gradient fixed right-6 top-6 z-50 hidden items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:shadow-blue-500/40 lg:flex"
+        className="accent-gradient fixed right-6 top-6 z-50 hidden items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-500/40 lg:flex"
       >
         Download CV
       </a>
