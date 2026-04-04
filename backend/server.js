@@ -13,6 +13,7 @@ const profileRoutes = require("./routes/profile");
 const statsRoutes = require("./routes/stats");
 const analyticsRoutes = require("./routes/analytics");
 const aboutRoutes = require("./routes/about");
+const uploadRoutes = require("./routes/uploads");
 
 const app = express();
 app.set("trust proxy", 1);
@@ -48,6 +49,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/stats", statsRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/about", aboutRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Portfolio API running." });

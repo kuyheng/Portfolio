@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { saveUploadedFile } = require("../services/uploadStore");
 
 async function getProfile(req, res) {
   try {
@@ -33,7 +34,6 @@ async function getProfile(req, res) {
 
 async function updateProfile(req, res) {
   const { name, email, job_title, bio, github_url, linkedin_url, twitter_url } = req.body;
-  const profile_photo_url = req.file ? `/uploads/${req.file.filename}` : req.body.profile_photo_url;
 
   try {
     const existing = await pool.query("SELECT * FROM users WHERE id = $1", [req.user.id]);
@@ -41,6 +41,11 @@ async function updateProfile(req, res) {
       return res.status(404).json({ message: "User not found." });
     }
     const current = existing.rows[0];
+    let profile_photo_url = req.body.profile_photo_url;
+    if (req.file) {
+      const uploaded = await saveUploadedFile(req.file);
+      profile_photo_url = uploaded.fileUrl;
+    }
 
     const result = await pool.query(
       `UPDATE users

@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { saveUploadedFile } = require("../services/uploadStore");
 
 function parseTechStack(input) {
   if (!input) return [];
@@ -38,10 +39,15 @@ async function getOne(req, res) {
 
 async function create(req, res) {
   const { title, description, category, tech_stack, github_url, live_url, sort_order } = req.body;
-  const thumbnail_url = req.file ? `/uploads/${req.file.filename}` : req.body.thumbnail_url || null;
   const techStack = parseTechStack(tech_stack);
 
   try {
+    let thumbnail_url = req.body.thumbnail_url || null;
+    if (req.file) {
+      const uploaded = await saveUploadedFile(req.file);
+      thumbnail_url = uploaded.fileUrl;
+    }
+
     const result = await pool.query(
       `INSERT INTO projects
        (title, description, category, tech_stack, thumbnail_url, github_url, live_url, sort_order)
@@ -75,9 +81,11 @@ async function update(req, res) {
       return res.status(404).json({ message: "Project not found." });
     }
     const current = existing.rows[0];
-    const thumbnail_url = req.file
-      ? `/uploads/${req.file.filename}`
-      : req.body.thumbnail_url || current.thumbnail_url;
+    let thumbnail_url = req.body.thumbnail_url || current.thumbnail_url;
+    if (req.file) {
+      const uploaded = await saveUploadedFile(req.file);
+      thumbnail_url = uploaded.fileUrl;
+    }
     const techStack = tech_stack ? parseTechStack(tech_stack) : current.tech_stack || [];
 
     const result = await pool.query(

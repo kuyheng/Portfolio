@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { saveUploadedFile } = require("../services/uploadStore");
 
 const parsePayload = (body) => {
   if (!body) return null;
@@ -41,9 +42,10 @@ async function updateAbout(req, res) {
 
   try {
     if (req.file) {
+      const uploaded = await saveUploadedFile(req.file);
       payload.hero = payload.hero || {};
       payload.hero.avatar = payload.hero.avatar || {};
-      payload.hero.avatar.src = `/uploads/${req.file.filename}`;
+      payload.hero.avatar.src = uploaded.fileUrl;
     }
 
     // Strip sections that are no longer used in the UI
